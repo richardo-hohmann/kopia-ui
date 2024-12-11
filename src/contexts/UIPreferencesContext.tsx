@@ -5,7 +5,7 @@ export const PAGE_SIZES = [10, 20, 30, 40, 50, 100];
 export const UIPreferencesContext = React.createContext<UIPreferences>({} as UIPreferences);
 
 const DEFAULT_PREFERENCES = { pageSize: PAGE_SIZES[0], bytesStringBase2: false, defaultSnapshotViewAll: false, theme: getDefaultTheme(), preferWebDav: false, fontSize: "fs-6" } as SerializedUIPreferences;
-const PREFERENCES_URL = '/api/v1/ui-preferences';
+const PREFERENCES_URL = '/api/v1/preferences';
 
 export type Theme = "light" | "dark" | "pastel" | "ocean";
 export type PageSize = 10 | 20 | 30 | 40 | 50 | 100;
@@ -107,7 +107,9 @@ export function UIPreferenceProvider(props: UIPreferenceProviderProps) {
             setTheme(storedPreferences.theme);
             setFontSize(storedPreferences.fontSize);
             setPreferences(storedPreferences);
-        }).catch(err => console.error(err));
+        }).catch(err => {
+            // console.log('[err]', err)
+        });
 
     }, [setTheme, setFontSize]);
 
@@ -115,7 +117,9 @@ export function UIPreferenceProvider(props: UIPreferenceProviderProps) {
         if (!preferences) {
             return;
         }
-        axios.put(PREFERENCES_URL, preferences).then(result => { }).catch(err => console.error(err));
+        axios.put(PREFERENCES_URL, preferences).then(result => { }).catch(err => {
+            // console.log('[err]', err)
+        });
     }, [preferences]);
 
     /**
